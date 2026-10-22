@@ -1,0 +1,53 @@
+services:
+  # postgres:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     POSTGRES_DB: ai_runtime_plat
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+  neo4j:
+    image: neo4j:5-community
+    environment:
+      NEO4J_AUTH: ${NEO4J_USER}/${NEO4J_PASSWORD}
+    ports:
+      - "7687:7687"
+      - "7475:7474"
+    volumes:
+      - neo4j_data:/var/lib/neo4j/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # backend:
+  #   build: ./backend
+  #   environment:
+  #     DATABASE_URL: ${DATABASE_URL}
+  #     NEO4J_URI: ${NEO4J_URI}
+  #     NEO4J_USER: ${NEO4J_USER}
+  #     NEO4J_PASSWORD: ${NEO4J_PASSWORD}
+  #     REDIS_URL: ${REDIS_URL}
+  #     OPENAI_API_KEY: ${OPENAI_API_KEY}
+  #     JWT_SECRET: ${JWT_SECRET}
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - postgres
+  #     - neo4j
+  #     - redis
+
+  # frontend:
+  #   build: ./frontend
+  #   environment:
+  #     NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+  #   ports:
+  #     - "3000:3000"
+
+volumes:
+  # postgres_data:
+  neo4j_data:
